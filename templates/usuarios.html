@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="top-bar">
+        <h1>Gestión de Usuarios</h1>
+    </div>
+
+    <!-- ===================== -->
+    <!-- FORMULARIO (CREAR / EDITAR) -->
+    <!-- ===================== -->
+    <div class="card">
+
+        <form method="POST">
+
+            <!-- ID OCULTO PARA EDITAR -->
+            <input type="hidden" name="id" value="{{ usuario_editar.id if usuario_editar else '' }}">
+
+            <input type="text" name="nombre"
+                   placeholder="Nombre"
+                   value="{{ usuario_editar.nombre if usuario_editar else '' }}"
+                   required>
+
+            <input type="email" name="correo"
+                   placeholder="Correo"
+                   value="{{ usuario_editar.correo if usuario_editar else '' }}"
+                   required>
+
+            <select name="rol" required>
+                <option value="Administrador"
+                    {% if usuario_editar and usuario_editar.rol == 'Administrador' %}selected{% endif %}>
+                    Administrador
+                </option>
+
+                <option value="Operador"
+                    {% if usuario_editar and usuario_editar.rol == 'Operador' %}selected{% endif %}>
+                    Operador
+                </option>
+            </select>
+
+            <button class="btn btn-create" type="submit">
+                {% if usuario_editar %}Actualizar{% else %}Crear Usuario{% endif %}
+            </button>
+
+        </form>
+    </div>
+
+    <!-- ===================== -->
+    <!-- TABLA -->
+    <!-- ===================== -->
+    <table>
+
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for u in usuarios %}
+        <tr>
+            <td>{{ u.nombre }}</td>
+            <td>{{ u.correo }}</td>
+            <td>{{ u.rol }}</td>
+
+            <td class="actions">
+
+                <a class="edit"
+                   href="{{ url_for('usuarios', editar=u.id) }}">
+                   Editar
+                </a>
+              
+                <a class="delete"
+                   href="{{ url_for('eliminar_usuario', id=u.id) }}"
+                   onclick="return confirm('¿Eliminar este usuario?');">
+                   Eliminar
+                </a>
+              
+                {% if u.activo == 1 %}
+                  <a class="badge active"
+                      href="{{ url_for('toggle_usuario', id=u.id) }}">
+                        Activo
+                {% else %}
+                    <a class="badge inactive"
+                       href="{{ url_for('toggle_usuario', id=u.id) }}">
+                        Inactivo
+                    </a>
+                {% endif %}
+
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

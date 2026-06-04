@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+Estaciones
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2 class="page-title">
+        {% if estacion_editar %}
+            Editar Estación
+        {% else %}
+            Nueva Estación
+        {% endif %}
+    </h2>
+
+    <form method="POST" class="form-grid">
+
+        <input type="hidden"
+               name="id"
+               value="{{ estacion_editar.id if estacion_editar else '' }}">
+
+        <input type="text"
+               name="nombre"
+               placeholder="Nombre"
+               value="{{ estacion_editar.nombre if estacion_editar else '' }}"
+               required>
+
+        <input type="text"
+               name="ubicacion"
+               placeholder="Ubicación"
+               value="{{ estacion_editar.ubicacion if estacion_editar else '' }}"
+               required>
+
+        <select name="operador_id" required>
+            <option value="">Seleccione operador</option>
+
+            {% for operador in operadores %}
+                <option value="{{ operador.id }}"
+                    {% if estacion_editar and estacion_editar.operador_id == operador.id %}
+                        selected
+                    {% endif %}>
+                    {{ operador.nombre }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <button type="submit" class="btn-primary">
+            {% if estacion_editar %}
+                Guardar Cambios
+            {% else %}
+                Agregar Estación
+            {% endif %}
+        </button>
+
+    </form>
+
+</div>
+
+<div class="card">
+    <h2 class="page-title">Estaciones Registradas</h2>
+</div>
+
+<div class="station-grid">
+
+    {% for estacion in estaciones %}
+
+    <div class="station-card">
+
+        <div class="station-title">
+            {{ estacion.nombre }}
+        </div>
+
+        <div class="station-text">
+            {{ estacion.ubicacion }}
+        </div>
+
+        <div class="station-actions">
+
+            <a class="enter" href="#">
+                Entrar
+            </a>
+
+            <a class="edit"
+               href="{{ url_for('estaciones', editar=estacion.id) }}">
+                Editar
+            </a>
+
+            <a class="delete"
+               href="{{ url_for('eliminar_estacion', id=estacion.id) }}"
+               onclick="return confirm('¿Eliminar estación?');">
+                Eliminar
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

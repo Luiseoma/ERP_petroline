@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Perfil{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Mi Perfil</h2>
+
+    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+    <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+</div>
+
+<hr>
+
+<div class="card">
+    <h3>Cambiar contraseña</h3>
+
+    <form method="POST">
+        <label>Contraseña actual</label>
+        <input type="password" name="old_password" required>
+
+        <label>Nueva contraseña</label>
+        <input type="password" name="new_password" required>
+
+        <label>Confirmar nueva contraseña</label>
+        <input type="password" name="confirm_password" required>
+
+        <button type="submit">Actualizar contraseña</button>
+    </form>
+</div>
+
+{% if primera_vez %}
+<div class="card warning">
+    <h3>⚠ Debes cambiar tu contraseña</h3>
+    <p>Es tu primer inicio de sesión, por seguridad debes cambiar la contraseña.</p>
+</div>
+{% endif %}
+
+{% endblock %}
