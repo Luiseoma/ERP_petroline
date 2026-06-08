@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-operador.html" %}
 
 {% block title %}
 Inicio Operador
@@ -26,7 +26,7 @@ Inicio Operador
                 </p>
 
                 <a
-                    href="{{ url_for('registro_diario', bomba_id=b.id) }}"
+                    href="{{ url_for('operador/registro_diario', bomba_id=b.id) }}"
                     class="btn btn-primary"
                 >
                     Entrar

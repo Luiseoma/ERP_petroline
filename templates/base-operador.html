@@ -14,7 +14,7 @@
 <body>
 
     <header class="topbar">
-        <h1>ERP Estaciones</h1>
+        <h1>FuelOPS ERP</h1>
 
         {% if session.get('user_name') %}
             <div class="usuario">
@@ -27,25 +27,25 @@
 
         <aside class="sidebar">
 
-            <a href="{{ url_for('dashboard') }}">
-                Dashboard
+            <a href="{{ url_for('operador.dashboard_operador') }}">
+                Inicio
             </a>
 
-            <a href="{{ url_for('perfil') }}">
+            <a href="{{ url_for('auth.perfil') }}">
                 Perfil
             </a>
 
             {% if session.get('rol') == 'Administrador' %}
-            <a href="{{ url_for('usuarios') }}">
+            <a href="{{ url_for('admin.usuarios') }}">
                 Usuarios
             </a>
             {% endif %}
 
-            <a href="{{ url_for('estaciones') }}">
+            <a href="{{ url_for('admin.estaciones') }}">
                 Estaciones
             </a>
 
-            <a href="{{ url_for('logout') }}">
+            <a href="{{ url_for('auth.logout') }}">
                 Cerrar sesión
             </a>
 
