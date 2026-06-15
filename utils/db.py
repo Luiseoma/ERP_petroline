@@ -1,13 +1,13 @@
+import os
 import mysql.connector
 
 def get_db_connection():
     return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='mysql123456',
-        database='sistema_admin'
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
-
 
 def query_db(query, params=None, fetchone=False, commit=False, dict_cursor=True):
     conn = get_db_connection()
