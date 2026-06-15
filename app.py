@@ -1,17 +1,19 @@
 from flask import Flask
+from dotenv import load_dotenv
 from datetime import timedelta
-
+import os
 from routes.auth_routes import auth_bp
 from routes.admin_routes import admin_bp
 from routes.operador_routes import operador_bp
 
+load_dotenv()
 app = Flask(__name__)
 
 # =======================
 # CONFIGURACIÓN
 # =======================
 
-app.config["SECRET_KEY"] = "mi_clave_secreta"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["SESSION_PERMANENT"] = True
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=10)
 
@@ -28,4 +30,4 @@ app.register_blueprint(operador_bp)
 # =======================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG") == "1")

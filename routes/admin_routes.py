@@ -31,7 +31,7 @@ admin_bp = Blueprint(
 @login_required
 @role_required('Administrador')
 def inicio_admin():
-    return render_template('dashboard_admin.html')
+    return render_template('admin/dashboard_admin.html')
 
 
 # =======================
@@ -62,7 +62,7 @@ def dashboard():
     """)
 
     return render_template(
-        'dashboard_admin.html',
+        'admin/dashboard_admin.html',
         total=total,
         roles=roles,
         ultimos=ultimos
@@ -152,7 +152,7 @@ def usuarios():
     """)
 
     return render_template(
-        'usuarios.html',
+        'admin.usuarios.html',
         usuarios=users,
         usuario_editar=usuario_editar
     )
@@ -270,7 +270,7 @@ def estaciones():
     """)
 
     return render_template(
-        'estaciones.html',
+        'admin/estaciones.html',
         estaciones=estaciones,
         estacion_editar=estacion_editar,
         operadores=operadores
